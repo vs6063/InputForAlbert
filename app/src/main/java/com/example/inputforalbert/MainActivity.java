@@ -36,13 +36,14 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
 
     @Override
     public boolean onFling(MotionEvent motionEvent, MotionEvent motionEvent1, float v, float v1) {
-        if(v > 10000)
+        int speed = 3000;
+        if(v > speed)
             setDigit("RIGHT");
-        else if(v < -10000)
+        else if(v < -speed)
             setDigit("LEFT");
-        else if(v1 > 10000)
+        else if(v1 > speed)
             setDigit("DOWN");
-        if(v1 < -10000)
+        if(v1 < -speed)
             textView.setText(String.valueOf("UP"));
         return true;
     }
@@ -98,6 +99,7 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
             currentPinPos++;
         } else if(swipe.equals("LEFT")){
             counter = 0;
+            textView.setText("0");
         } else if(swipe.equals("DOWN")){
             for (int i = 0; i < 4; i++) {
                 pin.get(i).setText("*");
