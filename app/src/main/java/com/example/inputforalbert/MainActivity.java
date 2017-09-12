@@ -34,18 +34,37 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
         currentPinPos = 0;
     }
 
+    private static final int SWIPE_THRESHOLD = 100;
+    private static final int SWIPE_VELOCITY_THRESHOLD = 100;
+
     @Override
-    public boolean onFling(MotionEvent motionEvent, MotionEvent motionEvent1, float v, float v1) {
-        int speed = 3000;
-        if(v > speed)
-            setDigit("RIGHT");
-        else if(v < -speed)
-            setDigit("LEFT");
-        else if(v1 > speed)
-            setDigit("DOWN");
-        if(v1 < -speed)
-            textView.setText(String.valueOf("UP"));
-        return true;
+    public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+        boolean result = false;
+        try {
+            float diffY = e2.getY() - e1.getY();
+            float diffX = e2.getX() - e1.getX();
+            if (Math.abs(diffX) > Math.abs(diffY)) {
+                if (Math.abs(diffX) > SWIPE_THRESHOLD && Math.abs(velocityX) > SWIPE_VELOCITY_THRESHOLD) {
+                    if (diffX > 0) {
+                        setDigit("RIGHT");
+                    } else {
+                        setDigit("LEFT");
+                    }
+                    result = true;
+                }
+            }
+            else if (Math.abs(diffY) > SWIPE_THRESHOLD && Math.abs(velocityY) > SWIPE_VELOCITY_THRESHOLD) {
+                if (diffY > 0) {
+                    setDigit("DOWN");
+                } else {
+                    textView.setText("UP");
+                }
+                result = true;
+            }
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        }
+        return result;
     }
 
     @Override
@@ -95,17 +114,16 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
             if(currentPinPos == 4) return;
             pin.get(currentPinPos).setText(String.valueOf(counter));
             counter = 0;
-            textView.setText("0");
             currentPinPos++;
         } else if(swipe.equals("LEFT")){
             counter = 0;
-            textView.setText("0");
         } else if(swipe.equals("DOWN")){
             for (int i = 0; i < 4; i++) {
                 pin.get(i).setText("*");
             }
             currentPinPos = counter = 0;
         }
+        textView.setText("0");
     }
     @Override
     public void onLongPress(MotionEvent motionEvent) {
