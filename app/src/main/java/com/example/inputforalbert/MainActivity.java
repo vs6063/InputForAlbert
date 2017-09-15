@@ -1,5 +1,6 @@
 package com.example.inputforalbert;
 
+import android.os.Vibrator;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MotionEvent;
@@ -16,6 +17,7 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
     private GestureDetector gestureStuff;
     private ArrayList<TextView> pin;
     private int currentPinPos;
+    private Vibrator v;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +34,7 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
             pin.get(i).setText("*");
         }
         currentPinPos = 0;
+        v = (Vibrator) getSystemService(this.VIBRATOR_SERVICE);
     }
 
     private static final int SWIPE_THRESHOLD = 100;
@@ -110,6 +113,7 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
     }
 
     private void setDigit(String swipe) {
+
         if(swipe.equals("RIGHT")) {
             if(currentPinPos == 4) return;
             pin.get(currentPinPos).setText(String.valueOf(counter));
@@ -124,6 +128,7 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
             currentPinPos = counter = 0;
         }
         textView.setText("0");
+        v.vibrate(500);
     }
     @Override
     public void onLongPress(MotionEvent motionEvent) {
