@@ -75,9 +75,11 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
         if(!this.gestureStuff.onTouchEvent(e)) {
             if (e.getPointerCount() < lastCount) {
                 counter += (lastCount - e.getPointerCount());
+                v.vibrate(10);
             }
             if (e.getAction() == MotionEvent.ACTION_UP) {
                 counter++;
+                v.vibrate(20);
             }
             if (counter > 9) {
                 counter = 9;
@@ -128,7 +130,7 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
             currentPinPos = counter = 0;
         }
         textView.setText("0");
-        v.vibrate(500);
+        v.vibrate(80);
     }
     @Override
     public void onLongPress(MotionEvent motionEvent) {
