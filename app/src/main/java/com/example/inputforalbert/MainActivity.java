@@ -9,6 +9,9 @@ import android.widget.TextView;
 import android.view.GestureDetector;
 
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
+
+import pl.bclogic.pulsator4droid.library.PulsatorLayout;
 
 import static android.view.MotionEvent.ACTION_UP;
 
@@ -82,8 +85,10 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
                     digit = 9;
                 }
                 digitView.setText(String.valueOf(digit));
-
                 lastCount = e.getPointerCount();
+
+                PulsatorLayout pulsator = (PulsatorLayout) findViewById(R.id.pulsator);
+                pulsator.start();
             }
         }
 
