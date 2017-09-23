@@ -122,9 +122,21 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
         float dx = motionEvent1.getX(0) - motionEvent.getX(0);
         float dy = motionEvent1.getY(0) - motionEvent.getY(0);
 
+        float absX = (dx > 0) ? dx : -dx;
+        float absY = (dy > 0) ? dy : -dy;
         if(motionEvent1.getAction() == ACTION_UP) {
-            if(dx > dy) {
-                return true;
+            if(absX > absY) {
+                if(dx > 0) {
+                    setDigit("RIGHT");
+                } else {
+                    setDigit("LEFT");
+                }
+            } else {
+                if(dy > 0) {
+                    setDigit("UP");
+                } else {
+                    setDigit("DOWN");
+                }
             }
         }
 //        if(v > 100)
