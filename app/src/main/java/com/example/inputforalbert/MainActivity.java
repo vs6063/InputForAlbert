@@ -3,6 +3,7 @@ package com.example.inputforalbert;
 import android.os.Vibrator;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.MotionEvent;
 import android.widget.TextView;
 import android.view.GestureDetector;
@@ -13,7 +14,7 @@ import static android.view.MotionEvent.ACTION_UP;
 
 public class MainActivity extends AppCompatActivity implements GestureDetector.OnGestureListener {
 
-    private static int maxPinSize = 12;
+    private static int pinLimit = 12;
 
     // current digit
     private static int digit = 0;
@@ -35,6 +36,7 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         digitView = (TextView) findViewById(R.id.digitView);
+        pinView = (TextView) findViewById(R.id.pinView);
         this.gestureStuff = new GestureDetector(this,this);
         pin = new ArrayList<String>();
         v = (Vibrator) getSystemService(this.VIBRATOR_SERVICE);
@@ -67,7 +69,7 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
 
     @Override
     public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-        /*
+
         boolean result = false;
         try {
             float diffY = e2.getY() - e1.getY();
@@ -94,8 +96,6 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
             exception.printStackTrace();
         }
         return result;
-        */
-        return false;
     }
 
     @Override
@@ -112,14 +112,14 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
 
     @Override
     public boolean onScroll(MotionEvent motionEvent, MotionEvent motionEvent1, float v, float v1) {
-        float dx = motionEvent1.getX(0) - motionEvent.getX(0);
-        float dy = motionEvent1.getY(0) - motionEvent.getY(0);
-
-        if(motionEvent1.getAction() == ACTION_UP) {
-            if(dx > dy) {
-                return true;
-            }
-        }
+//        float dx = motionEvent1.getX(0) - motionEvent.getX(0);
+//        float dy = motionEvent1.getY(0) - motionEvent.getY(0);
+//
+//        if(motionEvent1.getAction() == ACTION_UP) {
+//            if(dx > dy) {
+//                return true;
+//            }
+//        }
 //        if(v > 100)
 //            setDigit("LEFT");
 //        else if(v < -100)
@@ -133,18 +133,19 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
 
     private void setDigit(String swipe) {
 
+        int currentPin = pin.size();
         if(swipe.equals("RIGHT")) {
-            if(currentPinPos == 12) return;
-            pin.get(currentPinPos).setText(String.valueOf(digit));
+            if(currentPin >= pinLimit) return;
+            pin.add(String.valueOf(digit));
             digit = 0;
         } else if(swipe.equals("LEFT")){
             digit = 0;
         } else if(swipe.equals("DOWN")){
-            for (int i = 0; i < 4; i++) {
-                pin.get(i).setText("*");
-            }
+            pin.clear();
         }
-        digitView.setText("0");
+        digitView.setText(String.valueOf(digit));
+        pinView.setText(TextUtils.join(" ", pin));
+
         v.vibrate(80);
     }
     @Override
