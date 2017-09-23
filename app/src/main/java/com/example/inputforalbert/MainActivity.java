@@ -31,6 +31,10 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
     private GestureDetector gestureStuff;
     private Vibrator v;
 
+    //variables for scrolling
+    private float dx;
+    private float dy;
+    private boolean isScrolling;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,25 +44,45 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
         this.gestureStuff = new GestureDetector(this,this);
         pin = new ArrayList<String>();
         v = (Vibrator) getSystemService(this.VIBRATOR_SERVICE);
+        isScrolling = false;
     }
 
     @Override
     public boolean onTouchEvent (MotionEvent e) {
         if(!this.gestureStuff.onTouchEvent(e)) {
-            if (e.getPointerCount() < lastCount) {
-                digit += (lastCount - e.getPointerCount());
-                v.vibrate(10);
-            }
-            if (e.getAction() == ACTION_UP) {
-                digit++;
-                v.vibrate(20);
-            }
-            if (digit > 9) {
-                digit = 9;
-            }
-            digitView.setText(String.valueOf(digit));
+            if(e.getAction() == ACTION_UP && isScrolling) {
+                float absX = (dx > 0) ? dx : -dx;
+                float absY = (dy > 0) ? dy : -dy;
+                if(absX > absY) {
+                    if (dx > 0) {
+                        setDigit("RIGHT");
+                    } else {
+                        setDigit("LEFT");
+                    }
+                } else {
+                    if(dy > 0) {
+                        setDigit("UP");
+                    } else {
+                        setDigit("DOWN");
+                    }
+                }
+                isScrolling = false;
+            } else {
+                if (e.getPointerCount() < lastCount) {
+                    digit += (lastCount - e.getPointerCount());
+                    v.vibrate(10);
+                }
+                if (e.getAction() == ACTION_UP) {
+                    digit++;
+                    v.vibrate(20);
+                }
+                if (digit > 9) {
+                    digit = 9;
+                }
+                digitView.setText(String.valueOf(digit));
 
-            lastCount = e.getPointerCount();
+                lastCount = e.getPointerCount();
+            }
         }
 
         return true;
@@ -69,7 +93,8 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
 
     @Override
     public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-
+        return false;
+        /*
         boolean result = false;
         try {
             float diffY = e2.getY() - e1.getY();
@@ -96,6 +121,7 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
             exception.printStackTrace();
         }
         return result;
+        */
     }
 
     @Override
@@ -112,34 +138,9 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
 
     @Override
     public boolean onScroll(MotionEvent motionEvent, MotionEvent motionEvent1, float v, float v1) {
-        float dx = motionEvent1.getX(0) - motionEvent.getX(0);
-        float dy = motionEvent1.getY(0) - motionEvent.getY(0);
-
-        float absX = (dx > 0) ? dx : -dx;
-        float absY = (dy > 0) ? dy : -dy;
-        if(motionEvent1.getAction() == ACTION_UP) {
-            if(absX > absY) {
-                if(dx > 0) {
-                    setDigit("RIGHT");
-                } else {
-                    setDigit("LEFT");
-                }
-            } else {
-                if(dy > 0) {
-                    setDigit("UP");
-                } else {
-                    setDigit("DOWN");
-                }
-            }
-        }
-//        if(v > 100)
-//            setDigit("LEFT");
-//        else if(v < -100)
-//            setDigit("RIGHT");
-//        else if(v1 > 100)
-//            textView.setText(String.valueOf("UP"));
-//        if(v1 < -100)
-//            setDigit("DOWN");
+        dx = motionEvent1.getX(0) - motionEvent.getX(0);
+        dy = motionEvent1.getY(0) - motionEvent.getY(0);
+        isScrolling = true;
         return true;
     }
 
