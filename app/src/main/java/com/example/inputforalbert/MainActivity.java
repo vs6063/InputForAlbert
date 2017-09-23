@@ -11,19 +11,26 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements GestureDetector.OnGestureListener {
 
-    private static int counter = 0;
+    // current digit
+    private static int digit = 0;
+    // last number of pointers on screen.
     private static int lastCount = 0;
-    private TextView textView;
-    private GestureDetector gestureStuff;
+    // TextView for current digit
+    private TextView digitView;
+    // ArrayList for pin
     private ArrayList<TextView> pin;
+    // Current Position of pin
     private int currentPinPos;
+
+    //Initializer stuff for methods
+    private GestureDetector gestureStuff;
     private Vibrator v;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        textView = (TextView) findViewById(R.id.textView);
+        digitView = (TextView) findViewById(R.id.digitView);
         this.gestureStuff = new GestureDetector(this,this);
         pin = new ArrayList<TextView>();
         pin.add((TextView) findViewById(R.id.digit1));
@@ -60,7 +67,7 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
                 if (diffY > 0) {
                     setDigit("DOWN");
                 } else {
-                    textView.setText("UP");
+                    digitView.setText("UP");
                 }
                 result = true;
             }
@@ -74,17 +81,17 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
     public boolean onTouchEvent (MotionEvent e) {
         if(!this.gestureStuff.onTouchEvent(e)) {
             if (e.getPointerCount() < lastCount) {
-                counter += (lastCount - e.getPointerCount());
+                digit += (lastCount - e.getPointerCount());
                 v.vibrate(10);
             }
             if (e.getAction() == MotionEvent.ACTION_UP) {
-                counter++;
+                digit++;
                 v.vibrate(20);
             }
-            if (counter > 9) {
-                counter = 9;
+            if (digit > 9) {
+                digit = 9;
             }
-            textView.setText(String.valueOf(counter));
+            digitView.setText(String.valueOf(digit));
 
             lastCount = e.getPointerCount();
         }
@@ -118,18 +125,18 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
 
         if(swipe.equals("RIGHT")) {
             if(currentPinPos == 4) return;
-            pin.get(currentPinPos).setText(String.valueOf(counter));
-            counter = 0;
+            pin.get(currentPinPos).setText(String.valueOf(digit));
+            digit = 0;
             currentPinPos++;
         } else if(swipe.equals("LEFT")){
-            counter = 0;
+            digit = 0;
         } else if(swipe.equals("DOWN")){
             for (int i = 0; i < 4; i++) {
                 pin.get(i).setText("*");
             }
-            currentPinPos = counter = 0;
+            currentPinPos = digit = 0;
         }
-        textView.setText("0");
+        digitView.setText("0");
         v.vibrate(80);
     }
     @Override
@@ -141,37 +148,4 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
     public void onShowPress(MotionEvent motionEvent) {
 
     }
-
-    /*
-    @Override
-    public boolean onTouchEvent(MotionEvent e) {
-        int actionPerformed = e.getAction();
-        boolean trigger = true;
-        uf(false)
-        switch (actionPerformed) {
-            case MotionEvent.ACTION_POINTER_UP:{
-                counter++;
-                if (counter > 9) {
-                    counter = 0;
-                }
-                TextView textView = (TextView) findViewById(R.id.textView);
-                textView.setText(String.valueOf(counter));
-                trigger = true;
-                break;
-            }
-            case MotionEvent.ACTION_UP:{
-                counter++;
-                if (counter > 9) {
-                    counter = 0;
-                }
-                TextView textView = (TextView) findViewById(R.id.textView);
-                textView.setText(String.valueOf(counter));
-                trigger = true;
-                break;
-            }
-        }
-
-        return trigger;
-    }
-    */
 }
