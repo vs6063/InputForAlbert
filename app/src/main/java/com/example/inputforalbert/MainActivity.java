@@ -11,16 +11,18 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements GestureDetector.OnGestureListener {
 
+    private static int maxPinSize = 12;
+
     // current digit
     private static int digit = 0;
     // last number of pointers on screen.
     private static int lastCount = 0;
     // TextView for current digit
     private TextView digitView;
+    // TextView for pin
+    private TextView pinView;
     // ArrayList for pin
-    private ArrayList<TextView> pin;
-    // Current Position of pin
-    private int currentPinPos;
+    private ArrayList<String> pin;
 
     //Initializer stuff for methods
     private GestureDetector gestureStuff;
@@ -32,15 +34,7 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
         setContentView(R.layout.activity_main);
         digitView = (TextView) findViewById(R.id.digitView);
         this.gestureStuff = new GestureDetector(this,this);
-        pin = new ArrayList<TextView>();
-        pin.add((TextView) findViewById(R.id.digit1));
-        pin.add((TextView) findViewById(R.id.digit2));
-        pin.add((TextView) findViewById(R.id.digit3));
-        pin.add((TextView) findViewById(R.id.digit4));
-        for (int i = 0; i < 4; i++) {
-            pin.get(i).setText("*");
-        }
-        currentPinPos = 0;
+        pin = new ArrayList<String>();
         v = (Vibrator) getSystemService(this.VIBRATOR_SERVICE);
     }
 
@@ -124,17 +118,15 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
     private void setDigit(String swipe) {
 
         if(swipe.equals("RIGHT")) {
-            if(currentPinPos == 4) return;
+            if(currentPinPos == 12) return;
             pin.get(currentPinPos).setText(String.valueOf(digit));
             digit = 0;
-            currentPinPos++;
         } else if(swipe.equals("LEFT")){
             digit = 0;
         } else if(swipe.equals("DOWN")){
             for (int i = 0; i < 4; i++) {
                 pin.get(i).setText("*");
             }
-            currentPinPos = digit = 0;
         }
         digitView.setText("0");
         v.vibrate(80);

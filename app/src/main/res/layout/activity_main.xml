@@ -7,53 +7,17 @@
     tools:context="com.example.inputforalbert.MainActivity">
 
     <TextView
-        android:id="@+id/digit1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/pinView"
+        android:layout_width="215dp"
+        android:layout_height="32dp"
+        android:layout_marginBottom="32dp"
+        android:layout_marginLeft="84dp"
         android:text="@string/pin_digit"
         android:textAlignment="center"
         android:textSize="24sp"
-        tools:text="@string/pin_digit"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="38dp"
-        android:layout_marginLeft="141dp"
-        app:layout_constraintLeft_toLeftOf="parent" />
-
-    <TextView
-        android:id="@+id/digit2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/pin_digit"
-        android:textAlignment="center"
-        android:textSize="24sp"
-        tools:text="@string/pin_digit"
-        app:layout_constraintLeft_toRightOf="@+id/digit1"
-        android:layout_marginLeft="16dp"
-        app:layout_constraintBaseline_toBaselineOf="@+id/digit1" />
-
-    <TextView
-        android:id="@+id/digit3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/pin_digit"
-        android:textAlignment="center"
-        android:textSize="24sp"
-        tools:text="@string/pin_digit"
-        app:layout_constraintLeft_toRightOf="@+id/digit2"
-        android:layout_marginLeft="15dp"
-        app:layout_constraintBaseline_toBaselineOf="@+id/digit2" />
-
-    <TextView
-        android:id="@+id/digit4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/pin_digit"
-        android:textAlignment="center"
-        android:textSize="24sp"
-        tools:text="@string/pin_digit"
-        app:layout_constraintLeft_toRightOf="@+id/digit3"
-        android:layout_marginLeft="16dp"
-        app:layout_constraintBaseline_toBaselineOf="@+id/digit3" />
+        app:layout_constraintLeft_toLeftOf="parent"
+        tools:text="@string/pin_digit" />
 
     <ImageView
         android:id="@+id/imageView4"
