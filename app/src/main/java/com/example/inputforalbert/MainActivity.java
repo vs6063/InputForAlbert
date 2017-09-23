@@ -9,6 +9,8 @@ import android.view.GestureDetector;
 
 import java.util.ArrayList;
 
+import static android.view.MotionEvent.ACTION_UP;
+
 public class MainActivity extends AppCompatActivity implements GestureDetector.OnGestureListener {
 
     private static int maxPinSize = 12;
@@ -38,11 +40,34 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
         v = (Vibrator) getSystemService(this.VIBRATOR_SERVICE);
     }
 
+    @Override
+    public boolean onTouchEvent (MotionEvent e) {
+        if(!this.gestureStuff.onTouchEvent(e)) {
+            if (e.getPointerCount() < lastCount) {
+                digit += (lastCount - e.getPointerCount());
+                v.vibrate(10);
+            }
+            if (e.getAction() == ACTION_UP) {
+                digit++;
+                v.vibrate(20);
+            }
+            if (digit > 9) {
+                digit = 9;
+            }
+            digitView.setText(String.valueOf(digit));
+
+            lastCount = e.getPointerCount();
+        }
+
+        return true;
+    }
+
     private static final int SWIPE_THRESHOLD = 100;
     private static final int SWIPE_VELOCITY_THRESHOLD = 100;
 
     @Override
     public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+        /*
         boolean result = false;
         try {
             float diffY = e2.getY() - e1.getY();
@@ -69,27 +94,8 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
             exception.printStackTrace();
         }
         return result;
-    }
-
-    @Override
-    public boolean onTouchEvent (MotionEvent e) {
-        if(!this.gestureStuff.onTouchEvent(e)) {
-            if (e.getPointerCount() < lastCount) {
-                digit += (lastCount - e.getPointerCount());
-                v.vibrate(10);
-            }
-            if (e.getAction() == MotionEvent.ACTION_UP) {
-                digit++;
-                v.vibrate(20);
-            }
-            if (digit > 9) {
-                digit = 9;
-            }
-            digitView.setText(String.valueOf(digit));
-
-            lastCount = e.getPointerCount();
-        }
-        return true;
+        */
+        return false;
     }
 
     @Override
@@ -102,8 +108,18 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
         return false;
     }
 
+    private static final double DEADZONE_ANGLE = 0.57735026919;
+
     @Override
     public boolean onScroll(MotionEvent motionEvent, MotionEvent motionEvent1, float v, float v1) {
+        float dx = motionEvent1.getX(0) - motionEvent.getX(0);
+        float dy = motionEvent1.getY(0) - motionEvent.getY(0);
+
+        if(motionEvent1.getAction() == ACTION_UP) {
+            if(dx > dy) {
+                return true;
+            }
+        }
 //        if(v > 100)
 //            setDigit("LEFT");
 //        else if(v < -100)
