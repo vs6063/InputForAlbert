@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
     private float dx;
     private float dy;
     private boolean isScrolling;
-    private static int scrollThreshhold = 300;
+    private static int scrollThreshhold = 500;
     private static int tapThreshhold = 50;
 
     @Override
@@ -53,9 +53,9 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
     @Override
     public boolean onTouchEvent (MotionEvent e) {
         this.gestureStuff.onTouchEvent(e);
-        if(e.getAction() == ACTION_UP && isScrolling) {
-            float absX = (dx > 0) ? dx : -dx;
-            float absY = (dy > 0) ? dy : -dy;
+        float absX = (dx > 0) ? dx : -dx;
+        float absY = (dy > 0) ? dy : -dy;
+        if(e.getAction() == ACTION_UP && isScrolling && (absX > scrollThreshhold || absY > scrollThreshhold)) {
             if(absX > absY) {
                 if (dx > scrollThreshhold) {
                     setDigit("RIGHT");
@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
                 }
             }
             isScrolling = false;
-        } else {
+        } else { //if(absX < tapThreshhold && absY < tapThreshhold) {
             if (e.getPointerCount() < lastCount) {
                 digit += (lastCount - e.getPointerCount());
                 v.vibrate(10);
