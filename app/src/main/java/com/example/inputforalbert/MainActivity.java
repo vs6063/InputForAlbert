@@ -35,6 +35,9 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
     private float dx;
     private float dy;
     private boolean isScrolling;
+    private static int scrollThreshhold = 300;
+    private static int tapThreshhold = 50;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,42 +52,39 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
 
     @Override
     public boolean onTouchEvent (MotionEvent e) {
-        if(!this.gestureStuff.onTouchEvent(e)) {
-            if(e.getAction() == ACTION_UP && isScrolling) {
-                float absX = (dx > 0) ? dx : -dx;
-                float absY = (dy > 0) ? dy : -dy;
-                if(absX > absY) {
-                    if (dx > 0) {
-                        setDigit("RIGHT");
-                    } else {
-                        setDigit("LEFT");
-                    }
-                } else {
-                    if(dy > 0) {
-                        setDigit("UP");
-                    } else {
-                        setDigit("DOWN");
-                    }
+        this.gestureStuff.onTouchEvent(e);
+        if(e.getAction() == ACTION_UP && isScrolling) {
+            float absX = (dx > 0) ? dx : -dx;
+            float absY = (dy > 0) ? dy : -dy;
+            if(absX > absY) {
+                if (dx > scrollThreshhold) {
+                    setDigit("RIGHT");
+                } else if (dx < -scrollThreshhold) {
+                    setDigit("LEFT");
                 }
-                isScrolling = false;
             } else {
-                if (e.getPointerCount() < lastCount) {
-                    digit += (lastCount - e.getPointerCount());
-                    v.vibrate(10);
+                if(dy < -scrollThreshhold) {
+                    setDigit("UP");
+                } else if(dy > scrollThreshhold) {
+                    setDigit("DOWN");
                 }
-                if (e.getAction() == ACTION_UP) {
-                    digit++;
-                    v.vibrate(20);
-                }
-                if (digit > 9) {
-                    digit = 9;
-                }
-                digitView.setText(String.valueOf(digit));
-
-                lastCount = e.getPointerCount();
             }
+            isScrolling = false;
+        } else {
+            if (e.getPointerCount() < lastCount) {
+                digit += (lastCount - e.getPointerCount());
+                v.vibrate(10);
+            }
+            if (e.getAction() == ACTION_UP) {
+                digit++;
+                v.vibrate(20);
+            }
+            if (digit > 9) {
+                digit = 9;
+            }
+            digitView.setText(String.valueOf(digit));
+            lastCount = e.getPointerCount();
         }
-
         return true;
     }
 
