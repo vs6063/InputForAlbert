@@ -1,5 +1,6 @@
 package com.example.inputforalbert;
 
+import android.media.MediaPlayer;
 import android.os.Vibrator;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -9,14 +10,17 @@ import android.widget.TextView;
 import android.view.GestureDetector;
 
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
+
+import pl.bclogic.pulsator4droid.library.PulsatorLayout;
 
 import static android.view.MotionEvent.ACTION_UP;
 
 public class MainActivity extends AppCompatActivity implements GestureDetector.OnGestureListener {
 
-    private static int pinLimit = 12;
-    private static int scrollThreshhold = 300;
-    private static int tapThreshhold = 50;
+    private final int pinLimit = 12;
+    private final int scrollThreshhold = 300;
+    private final int tapThreshhold = 50;
 
     // current digit
     private static int digit = 0;
@@ -32,6 +36,8 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
     //Initializer stuff for methods
     private GestureDetector gestureStuff;
     private Vibrator v;
+    private MediaPlayer tapSound;
+    private MediaPlayer swipeSound;
 
     //variables for scrolling
     private float dx;
@@ -47,6 +53,9 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
         pin = new ArrayList<String>();
         v = (Vibrator) getSystemService(this.VIBRATOR_SERVICE);
         isScrolling = false;
+
+        tapSound = MediaPlayer.create(this, R.raw.tap);
+        swipeSound = MediaPlayer.create(this, R.raw.swipe);
     }
 
     @Override
@@ -72,18 +81,22 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
             } else {
                 if (e.getPointerCount() < lastCount) {
                     digit += (lastCount - e.getPointerCount());
-                    v.vibrate(10);
+                    tapSound.start();
+                    v.vibrate(20);
                 }
                 if (e.getAction() == ACTION_UP) {
                     digit++;
+                    tapSound.start();
                     v.vibrate(20);
                 }
                 if (digit > 9) {
                     digit = 9;
                 }
                 digitView.setText(String.valueOf(digit));
-
                 lastCount = e.getPointerCount();
+
+                PulsatorLayout pulsator = (PulsatorLayout) findViewById(R.id.pulsator);
+                pulsator.start();
             }
         }
 
@@ -161,6 +174,7 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
         digitView.setText(String.valueOf(digit));
         pinView.setText(TextUtils.join(" ", pin));
 
+        swipeSound.start();
         v.vibrate(80);
     }
     @Override
