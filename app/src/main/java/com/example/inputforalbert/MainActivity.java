@@ -17,45 +17,62 @@ import static android.view.MotionEvent.ACTION_UP;
 
 public class MainActivity extends AppCompatActivity implements GestureDetector.OnGestureListener {
 
+    // constant for passing pin as intent to DisplayPin activity
     public static final String PIN = "com.example.inputforalbert.PIN";
-    private final int pinLimit = 12;
 
+    // VARIABLES FOR DIGIT MANIPULATION
     // current digit
-    private static int digit = 0;
+    private static int digit;
     // last number of pointers on screen.
-    private static int lastCount = 0;
+    private static int lastCount;
     // TextView for current digit
     private TextView digitView;
+
+    // VARIABLES FOR PIN MANIPULATION
+    // max pin
+    private final int MAX_PIN = 12;
     // TextView for pin
     private TextView pinView;
     // ArrayList for pin
     private ArrayList<String> pin;
 
-    //Initializer stuff for methods
+    // Variables for scrolling
     private GestureDetector gestureStuff;
+    private float dx;
+    private float dy;
+    private boolean isScrolling;
+    private static int SCROLL_THRESHHOLD = 500;
+    private static final double DEADZONE_ANGLE = 0.57735026919;
+
+    // Initializer stuff for tactile feedback systems
     private Vibrator v;
     private MediaPlayer tapSound;
     private MediaPlayer swipeSound;
 
-    //variables for scrolling
-    private float dx;
-    private float dy;
-    private boolean isScrolling;
-    private static int scrollThreshhold = 500;
-    private static int tapThreshhold = 50;
+    // Variable for controlling tap distance threshhold
+    //private static int TAP_THRESHHOLD = 50;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // Digit initialisation
         digitView = (TextView) findViewById(R.id.digitView);
+        digit = 0;
+        lastCount = 0;
+
+        // Pin initialisation
         pinView = (TextView) findViewById(R.id.pinView);
-        this.gestureStuff = new GestureDetector(this,this);
         pin = new ArrayList<String>();
-        v = (Vibrator) getSystemService(this.VIBRATOR_SERVICE);
+
+        // Scroll initialisation
+        this.gestureStuff = new GestureDetector(this,this);
         isScrolling = false;
 
+        // Tactile feedback initialisation
+        v = (Vibrator) getSystemService(this.VIBRATOR_SERVICE);
         tapSound = MediaPlayer.create(this, R.raw.tap);
         swipeSound = MediaPlayer.create(this, R.raw.swipe);
     }
@@ -66,94 +83,47 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
         this.gestureStuff.onTouchEvent(e);
         float absX = (dx > 0) ? dx : -dx;
         float absY = (dy > 0) ? dy : -dy;
-        if(e.getAction() == ACTION_UP && isScrolling && (absX > scrollThreshhold || absY > scrollThreshhold)) {
+        // If scroll distance is greater than the scroll threshhold, perform a swipe
+        if(e.getAction() == ACTION_UP && isScrolling && (absX > SCROLL_THRESHHOLD || absY > SCROLL_THRESHHOLD)) {
+            // Perform corresponding swipe action to scroll direction
             if(absX > absY) {
-                if (dx > scrollThreshhold) {
+                if (dx > SCROLL_THRESHHOLD) {
                     setDigit("RIGHT");
-                } else if (dx < -scrollThreshhold) {
+                } else if (dx < -SCROLL_THRESHHOLD) {
                     setDigit("LEFT");
                 }
             } else {
-                if(dy < -scrollThreshhold) {
+                if(dy < -SCROLL_THRESHHOLD) {
                     setDigit("UP");
-                } else if(dy > scrollThreshhold) {
+                } else if(dy > SCROLL_THRESHHOLD) {
                     setDigit("DOWN");
                 }
             }
             isScrolling = false;
-        } else { //if(absX < tapThreshhold && absY < tapThreshhold) {
+        // If scroll distance is less than the scroll threshhold, touch event is taken as a touch.
+        } else { //if(absX < TAP_THRESHHOLD && absY < TAP_THRESHHOLD) {
+            // Compare current pointer count and last pointer count to determine how many fingers are on the screen
             if (e.getPointerCount() < lastCount) {
                 digit += (lastCount - e.getPointerCount());
                 v.vibrate(20);
                 tapSound.start();
             }
+            // last pointer leaves screen, increment digit by 1
             if (e.getAction() == ACTION_UP) {
                 digit++;
                 v.vibrate(20);
                 tapSound.start();
             }
+            // ensure digit doesn't pass 9
             if (digit > 9) {
                 digit = 9;
             }
+            
+            // Change digit view accordingly
             digitView.setText(String.valueOf(digit));
+            // update last pointer count
             lastCount = e.getPointerCount();
         }
-        return true;
-    }
-
-    private static final int SWIPE_THRESHOLD = 100;
-    private static final int SWIPE_VELOCITY_THRESHOLD = 100;
-
-    @Override
-    public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-        return false;
-        /*
-        boolean result = false;
-        try {
-            float diffY = e2.getY() - e1.getY();
-            float diffX = e2.getX() - e1.getX();
-            if (Math.abs(diffX) > Math.abs(diffY)) {
-                if (Math.abs(diffX) > SWIPE_THRESHOLD && Math.abs(velocityX) > SWIPE_VELOCITY_THRESHOLD) {
-                    if (diffX > 0) {
-                        setDigit("RIGHT");
-                    } else {
-                        setDigit("LEFT");
-                    }
-                    result = true;
-                }
-            }
-            else if (Math.abs(diffY) > SWIPE_THRESHOLD && Math.abs(velocityY) > SWIPE_VELOCITY_THRESHOLD) {
-                if (diffY > 0) {
-                    setDigit("DOWN");
-                } else {
-                    digitView.setText("UP");
-                }
-                result = true;
-            }
-        } catch (Exception exception) {
-            exception.printStackTrace();
-        }
-        return result;
-        */
-    }
-
-    @Override
-    public boolean onDown(MotionEvent motionEvent) {
-        return false;
-    }
-
-    @Override
-    public boolean onSingleTapUp(MotionEvent motionEvent) {
-        return false;
-    }
-
-    private static final double DEADZONE_ANGLE = 0.57735026919;
-
-    @Override
-    public boolean onScroll(MotionEvent motionEvent, MotionEvent motionEvent1, float v, float v1) {
-        dx = motionEvent1.getX(0) - motionEvent.getX(0);
-        dy = motionEvent1.getY(0) - motionEvent.getY(0);
-        isScrolling = true;
         return true;
     }
 
@@ -161,32 +131,57 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
 
         int currentPin = pin.size();
         if(swipe.equals("RIGHT")) {
-            if(currentPin >= pinLimit) return;
+            // append current digit to pin and reset digit to 0
+            if(currentPin >= MAX_PIN) return;
             pin.add(String.valueOf(digit));
-            digit = 0;
         } else if(swipe.equals("LEFT")){
-            digit = 0;
+            // reset digit to 0
         } else if(swipe.equals("DOWN")){
-            digit = 0;
+            // reset entire pin and reset digit to 0
             pin.clear();
         } else if(swipe.equals("UP")){
+            // submit current pin to DisplayPin activity as intent
+            swipeSound.start();
+            v.vibrate(80);
             Intent intent = new Intent(this, DisplayPin.class);
             intent.putExtra(PIN, pin);
             startActivity(intent);
         }
+        // in all swipe cases, digit is reset to 0
+        digit = 0;
+
+        // reset digit and pin views
         digitView.setText(String.valueOf(digit));
         pinView.setText(TextUtils.join(" ", pin));
 
+        // output sound and vibration tactile feedback
         swipeSound.start();
         v.vibrate(80);
     }
-    @Override
-    public void onLongPress(MotionEvent motionEvent) {
-
-    }
 
     @Override
-    public void onShowPress(MotionEvent motionEvent) {
+    public boolean onScroll(MotionEvent motionEvent, MotionEvent motionEvent1, float v, float v1) {
 
+        dx = motionEvent1.getX(0) - motionEvent.getX(0);
+        dy = motionEvent1.getY(0) - motionEvent.getY(0);
+        isScrolling = true;
+        return true;
     }
+
+    // ----- REQUIRED BLANK FUNCTIONS FOR SCROLLING ----- //
+
+    @Override
+    public void onLongPress(MotionEvent motionEvent) { }
+
+    @Override
+    public void onShowPress(MotionEvent motionEvent) { }
+
+    @Override
+    public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) { return false; }
+
+    @Override
+    public boolean onDown(MotionEvent motionEvent) { return false; }
+
+    @Override
+    public boolean onSingleTapUp(MotionEvent motionEvent) { return false; }
 }
