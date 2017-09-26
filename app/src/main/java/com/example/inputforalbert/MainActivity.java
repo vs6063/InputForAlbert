@@ -166,6 +166,7 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
         } else if(swipe.equals("LEFT")){
             digit = 0;
         } else if(swipe.equals("DOWN")){
+            digit = 0;
             pin.clear();
         }
         digitView.setText(String.valueOf(digit));
