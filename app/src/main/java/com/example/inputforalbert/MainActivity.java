@@ -7,8 +7,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.MotionEvent;
+import android.widget.CompoundButton;
 import android.widget.TextView;
 import android.view.GestureDetector;
+import android.widget.ToggleButton;
 
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
@@ -35,6 +37,10 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
     private TextView pinView;
     // ArrayList for pin
     private ArrayList<String> pin;
+    // Toggle button for pin
+    private ToggleButton pinToggle;
+    // Toggle variable for pin
+    private boolean showPin;
 
     // Variables for scrolling
     private GestureDetector gestureStuff;
@@ -60,12 +66,28 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
 
         // Digit initialisation
         digitView = (TextView) findViewById(R.id.digitView);
+        digitView.setText("");
         digit = 0;
         lastCount = 0;
 
         // Pin initialisation
         pinView = (TextView) findViewById(R.id.pinView);
         pin = new ArrayList<String>();
+        ToggleButton pinToggle = (ToggleButton) findViewById(R.id.pinToggle);
+        pinToggle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    showPin = true;
+                    digitView.setText(String.valueOf(digit));
+                    pinView.setText(TextUtils.join(" ", pin));
+                } else {
+                    showPin = false;
+                    digitView.setText("");
+                    pinView.setText("");
+                }
+            }
+        });
 
         // Scroll initialisation
         this.gestureStuff = new GestureDetector(this,this);
@@ -120,7 +142,9 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
             }
             
             // Change digit view accordingly
-            digitView.setText(String.valueOf(digit));
+            if (showPin) {
+                digitView.setText(String.valueOf(digit));
+            }
             // update last pointer count
             lastCount = e.getPointerCount();
         }
@@ -152,8 +176,13 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
         digit = 0;
 
         // reset digit and pin views
-        digitView.setText(String.valueOf(digit));
-        pinView.setText(TextUtils.join(" ", pin));
+        if (showPin) {
+            digitView.setText(String.valueOf(digit));
+            pinView.setText(TextUtils.join(" ", pin));
+        } else {
+            digitView.setText("");
+            pinView.setText("");
+        }
 
         // output sound and vibration tactile feedback
         swipeSound.start();
