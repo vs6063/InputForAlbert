@@ -90,25 +90,4 @@
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_marginBottom="8dp" />
 
-    <!-- Pulsator Layout Code -->
-    <pl.bclogic.pulsator4droid.library.PulsatorLayout
-        android:id="@+id/pulsator"
-        android:layout_width="144dp"
-        android:layout_height="144dp"
-        app:pulse_color="@color/colorAccent"
-        app:pulse_count="1"
-        app:pulse_duration="400"
-        app:pulse_interpolator="Linear"
-        app:pulse_repeat="1"
-        app:pulse_startFromScratch="true"
-        android:layout_marginLeft="8dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginRight="8dp"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintVertical_bias="0.498"></pl.bclogic.pulsator4droid.library.PulsatorLayout>
-
 </android.support.constraint.ConstraintLayout>

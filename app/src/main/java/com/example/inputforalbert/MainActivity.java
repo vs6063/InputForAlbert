@@ -12,8 +12,6 @@ import android.view.GestureDetector;
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
-import pl.bclogic.pulsator4droid.library.PulsatorLayout;
-
 import static android.view.MotionEvent.ACTION_UP;
 
 public class MainActivity extends AppCompatActivity implements GestureDetector.OnGestureListener {
@@ -43,6 +41,7 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
     private boolean isScrolling;
     private static int scrollThreshhold = 500;
     private static int tapThreshhold = 50;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,11 +82,13 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
         } else { //if(absX < tapThreshhold && absY < tapThreshhold) {
             if (e.getPointerCount() < lastCount) {
                 digit += (lastCount - e.getPointerCount());
-                v.vibrate(10);
+                v.vibrate(20);
+                tapSound.start();
             }
             if (e.getAction() == ACTION_UP) {
                 digit++;
                 v.vibrate(20);
+                tapSound.start();
             }
             if (digit > 9) {
                 digit = 9;
