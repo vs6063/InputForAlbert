@@ -141,6 +141,7 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
             pin.clear();
         } else if(swipe.equals("UP")){
             // submit current pin to DisplayPin activity as intent
+            if(pin.size() < 4) return;
             swipeSound.start();
             v.vibrate(80);
             Intent intent = new Intent(this, DisplayPin.class);
