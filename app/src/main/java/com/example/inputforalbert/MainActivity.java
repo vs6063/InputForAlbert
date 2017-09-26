@@ -19,8 +19,6 @@ import static android.view.MotionEvent.ACTION_UP;
 public class MainActivity extends AppCompatActivity implements GestureDetector.OnGestureListener {
 
     private final int pinLimit = 12;
-    private final int scrollThreshhold = 300;
-    private final int tapThreshhold = 50;
 
     // current digit
     private static int digit = 0;
