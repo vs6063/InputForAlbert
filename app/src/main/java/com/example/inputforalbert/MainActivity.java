@@ -32,6 +32,7 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
 
     // VARIABLES FOR PIN MANIPULATION
     // max pin
+    private final int MIN_PIN = 4;
     private final int MAX_PIN = 12;
     // TextView for pin
     private TextView pinView;
@@ -165,7 +166,7 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
             pin.clear();
         } else if(swipe.equals("UP")){
             // submit current pin to DisplayPin activity as intent
-            if(pin.size() < 4) return;
+            if(pin.size() < MIN_PIN) return;
             swipeSound.start();
             v.vibrate(80);
             Intent intent = new Intent(this, DisplayPin.class);
