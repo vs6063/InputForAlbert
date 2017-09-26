@@ -1,5 +1,6 @@
 package com.example.inputforalbert;
 
+import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Vibrator;
 import android.support.v7.app.AppCompatActivity;
@@ -16,6 +17,7 @@ import static android.view.MotionEvent.ACTION_UP;
 
 public class MainActivity extends AppCompatActivity implements GestureDetector.OnGestureListener {
 
+    public static final String PIN = "com.example.inputforalbert.PIN";
     private final int pinLimit = 12;
 
     // current digit
@@ -167,6 +169,10 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
         } else if(swipe.equals("DOWN")){
             digit = 0;
             pin.clear();
+        } else if(swipe.equals("UP")){
+            Intent intent = new Intent(this, DisplayPin.class);
+            intent.putExtra(PIN, pin);
+            startActivity(intent);
         }
         digitView.setText(String.valueOf(digit));
         pinView.setText(TextUtils.join(" ", pin));
