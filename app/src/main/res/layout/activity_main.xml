@@ -8,11 +8,9 @@
 
     <TextView
         android:id="@+id/pinView"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="32dp"
         android:layout_marginBottom="50dp"
-        android:layout_marginLeft="0dp"
-        android:layout_marginRight="0dp"
         android:text="@string/pin_digit"
         android:textAlignment="center"
         android:textSize="30sp"
@@ -71,7 +69,9 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp" />
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp" />
 
     <TextView
         android:id="@+id/digitView"
@@ -80,10 +80,35 @@
         android:text="@string/pin_digit"
         android:textAlignment="center"
         android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        tools:text="@string/pin_digit"
+        android:layout_marginLeft="8dp"
         app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginRight="8dp"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="@string/pin_digit" />
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="8dp" />
+
+    <!-- Pulsator Layout Code -->
+    <pl.bclogic.pulsator4droid.library.PulsatorLayout
+        android:id="@+id/pulsator"
+        android:layout_width="144dp"
+        android:layout_height="144dp"
+        app:pulse_color="@color/colorAccent"
+        app:pulse_count="1"
+        app:pulse_duration="500"
+        app:pulse_interpolator="Linear"
+        app:pulse_repeat="1"
+        app:pulse_startFromScratch="true"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginRight="8dp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintVertical_bias="0.498"></pl.bclogic.pulsator4droid.library.PulsatorLayout>
 
 </android.support.constraint.ConstraintLayout>
