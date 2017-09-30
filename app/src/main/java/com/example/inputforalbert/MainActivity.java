@@ -86,10 +86,9 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
                     showPin = false;
                     digitView.setText("");
                     String pinConfirmed = "";
-                    for (int i = pin.size(); i > 1; i--) {
+                    for (int i = pin.size(); i > 0; i--) {
                         pinConfirmed += "* ";
                     }
-                    pinConfirmed += "*";
                     pinView.setText(pinConfirmed);
                 }
             }
@@ -188,10 +187,9 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
         } else {
             digitView.setText("");
             String pinConfirmed = "";
-            for (int i = pin.size(); i > 1; i--) {
+            for (int i = pin.size(); i > 0; i--) {
                 pinConfirmed += "* ";
             }
-            pinConfirmed += "*";
             pinView.setText(pinConfirmed);
         }
 
