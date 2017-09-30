@@ -84,7 +84,12 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
                 } else {
                     showPin = false;
                     digitView.setText("");
-                    pinView.setText("");
+                    String pinConfirmed = "";
+                    for (int i = pin.size(); i > 1; i--) {
+                        pinConfirmed += "* ";
+                    }
+                    pinConfirmed += "*";
+                    pinView.setText(pinConfirmed);
                 }
             }
         });
@@ -181,7 +186,12 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
             pinView.setText(TextUtils.join(" ", pin));
         } else {
             digitView.setText("");
-            pinView.setText("");
+            String pinConfirmed = "";
+            for (int i = pin.size(); i > 1; i--) {
+                pinConfirmed += "* ";
+            }
+            pinConfirmed += "*";
+            pinView.setText(pinConfirmed);
         }
 
         // output sound and vibration tactile feedback
@@ -194,8 +204,11 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
 
         dx = motionEvent1.getX(0) - motionEvent.getX(0);
         dy = motionEvent1.getY(0) - motionEvent.getY(0);
-        isScrolling = true;
-        return true;
+        if(motionEvent.getPointerCount() == 1) {
+            isScrolling = true;
+            return true;
+        }
+        return false;
     }
 
     // ----- REQUIRED BLANK FUNCTIONS FOR SCROLLING ----- //
