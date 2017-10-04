@@ -43,7 +43,7 @@
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginTop="0dp"
-        android:text="You have finished the tutorial. Make sure your customer understands this system before proceeding to the input screen. "
+        android:text="You have finished the tutorial. Make sure your customer understands this system then proceed to the input screen. "
         android:textAlignment="center"
         android:textSize="36sp"
         app:layout_constraintBottom_toTopOf="@+id/guideline3"
