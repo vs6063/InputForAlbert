@@ -20,6 +20,8 @@ import java.util.concurrent.TimeUnit;
 
 import static android.view.MotionEvent.ACTION_UP;
 
+// gary is testing his push
+
 public class MainActivity extends AppCompatActivity implements GestureDetector.OnGestureListener {
 
     // constant for passing pin as intent to DisplayPin activity
