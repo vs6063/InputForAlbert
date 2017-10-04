@@ -21,6 +21,7 @@ import java.util.concurrent.TimeUnit;
 import static android.view.MotionEvent.ACTION_UP;
 
 // gary is testing his push
+// victor is testing garys pushing who is testing victors pushing test
 
 public class MainActivity extends AppCompatActivity implements GestureDetector.OnGestureListener {
 
