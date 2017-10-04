@@ -19,7 +19,7 @@ public class TutorialStart extends AppCompatActivity {
         nextButton = (ImageButton) findViewById(R.id.nextButton);
         nextButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent nextTutorial = new Intent(getApplicationContext(), Startup.class);
+                Intent nextTutorial = new Intent(getApplicationContext(), Tutorial1.class);
                 startActivity(nextTutorial);
             }
         });
@@ -27,7 +27,7 @@ public class TutorialStart extends AppCompatActivity {
         backButton = (ImageButton) findViewById(R.id.backButton);
         backButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent prevTutorial = new Intent(getApplicationContext(), Tutorial1.class);
+                Intent prevTutorial = new Intent(getApplicationContext(), Startup.class);
                 startActivity(prevTutorial);
             }
         });

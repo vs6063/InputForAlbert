@@ -7,7 +7,7 @@
     tools:context="com.example.inputforalbert.TutorialEnd">
 
     <ImageButton
-        android:id="@+id/imageButton"
+        android:id="@+id/nextButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="23dp"
@@ -18,7 +18,7 @@
         app:srcCompat="@android:drawable/arrow_up_float" />
 
     <ImageButton
-        android:id="@+id/imageButton2"
+        android:id="@+id/backButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="23dp"
@@ -43,7 +43,7 @@
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginTop="0dp"
-        android:text="You have finished the tutorial. Make sure your customer understands this system, then proceed to the input screen. "
+        android:text="You have finished the tutorial. Make sure your customer understands this system before proceeding to the input screen. "
         android:textAlignment="center"
         android:textSize="36sp"
         app:layout_constraintBottom_toTopOf="@+id/guideline3"
