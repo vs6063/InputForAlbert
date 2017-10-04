@@ -28,5 +28,9 @@ public class Tutorial2 extends AppCompatActivity {
                 startActivity(prevTutorial);
             }
         });
+
+        AnimatedGifImageView animatedGifImageView = ((AnimatedGifImageView)findViewById(R.id.animatedGifImageView));
+        animatedGifImageView.setAnimatedGif(R.raw.right,
+                TYPE.FIT_CENTER);
     }
 }
