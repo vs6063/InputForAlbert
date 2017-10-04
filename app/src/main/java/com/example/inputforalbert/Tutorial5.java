@@ -20,7 +20,7 @@ public class Tutorial5 extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tutorial5);
 
-        tutorialScript = MediaPlayer.create(this, R.raw.p5);
+        tutorialScript = MediaPlayer.create(this, R.raw.step_5);
 
         nextButton = (ImageButton) findViewById(R.id.nextButton);
         nextButton.setOnClickListener(new View.OnClickListener() {

@@ -24,7 +24,7 @@ public class Tutorial1 extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tutorial1);
 
-        tutorialScript = MediaPlayer.create(this, R.raw.p1);
+        tutorialScript = MediaPlayer.create(this, R.raw.step_1);
 
         nextButton = (ImageButton) findViewById(R.id.nextButton);
         nextButton.setOnClickListener(new View.OnClickListener() {
@@ -45,11 +45,6 @@ public class Tutorial1 extends AppCompatActivity {
         playSound = (ImageButton) findViewById(R.id.soundButton);
         playSound.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                try {
-                    tutorialScript.prepare();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
                 tutorialScript.start();
             }
         });
