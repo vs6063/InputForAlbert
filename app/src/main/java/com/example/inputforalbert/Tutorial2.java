@@ -11,7 +11,7 @@ public class Tutorial2 extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_tutorial2);
+        setContentView(R.layout.activity_tutorial3);
 
         final ImageButton nextButton = (ImageButton) findViewById(R.id.nextButton);
         nextButton.setOnClickListener(new View.OnClickListener() {
@@ -28,9 +28,5 @@ public class Tutorial2 extends AppCompatActivity {
                 startActivity(prevTutorial);
             }
         });
-
-        AnimatedGifImageView animatedGifImageView = ((AnimatedGifImageView)findViewById(R.id.animatedGifImageView));
-        animatedGifImageView.setAnimatedGif(R.raw.right,
-                TYPE.FIT_CENTER);
     }
 }
