@@ -17,18 +17,18 @@ public class Tutorial1 extends AppCompatActivity {
     private ImageButton backButton;
 
     private ImageButton playSound;
-    private MediaPlayer tutorialScript;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tutorial1);
 
-        tutorialScript = MediaPlayer.create(this, R.raw.p1);
+        final MediaPlayer tutorialScript = MediaPlayer.create(Tutorial1.this,R.raw.step_1);
 
         nextButton = (ImageButton) findViewById(R.id.nextButton);
         nextButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                tutorialScript.release();
                 Intent nextTutorial = new Intent(getApplicationContext(), Tutorial2.class);
                 startActivity(nextTutorial);
             }
@@ -37,7 +37,8 @@ public class Tutorial1 extends AppCompatActivity {
         backButton = (ImageButton) findViewById(R.id.backButton);
         backButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent prevTutorial = new Intent(getApplicationContext(), Startup.class);
+                tutorialScript.release();
+                Intent prevTutorial = new Intent(getApplicationContext(), TutorialStart.class);
                 startActivity(prevTutorial);
             }
         });
@@ -45,11 +46,6 @@ public class Tutorial1 extends AppCompatActivity {
         playSound = (ImageButton) findViewById(R.id.soundButton);
         playSound.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                try {
-                    tutorialScript.prepare();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
                 tutorialScript.start();
             }
         });

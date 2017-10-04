@@ -24,7 +24,9 @@
         <activity android:name=".Tutorial2" />
         <activity android:name=".Tutorial3" />
         <activity android:name=".Tutorial4" />
-        <activity android:name=".Tutorial5"></activity>
+        <activity android:name=".Tutorial5" />
+        <activity android:name=".TutorialStart" />
+        <activity android:name=".TutorialEnd"></activity>
     </application>
 
 </manifest>

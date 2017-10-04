@@ -2,6 +2,7 @@ package com.example.inputforalbert;
 
 import android.content.Intent;
 import android.media.MediaPlayer;
+import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -13,19 +14,19 @@ public class Tutorial5 extends AppCompatActivity {
     private ImageButton backButton;
 
     private ImageButton playSound;
-    private MediaPlayer tutorialScript;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tutorial5);
 
-        tutorialScript = MediaPlayer.create(this, R.raw.p5);
+        final MediaPlayer tutorialScript = MediaPlayer.create(this, R.raw.step_5);
 
         nextButton = (ImageButton) findViewById(R.id.nextButton);
         nextButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent nextTutorial = new Intent(getApplicationContext(), MainActivity.class);
+                tutorialScript.release();
+                Intent nextTutorial = new Intent(getApplicationContext(), TutorialEnd.class);
                 startActivity(nextTutorial);
             }
         });
@@ -33,6 +34,7 @@ public class Tutorial5 extends AppCompatActivity {
         backButton = (ImageButton) findViewById(R.id.backButton);
         backButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                tutorialScript.release();
                 Intent prevTutorial = new Intent(getApplicationContext(), Tutorial4.class);
                 startActivity(prevTutorial);
             }

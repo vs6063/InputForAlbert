@@ -24,7 +24,7 @@ public class Startup extends AppCompatActivity {
         final Button noButton = (Button) findViewById(R.id.noButton);
         noButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent tutorial = new Intent(getApplicationContext(), Tutorial1.class);
+                Intent tutorial = new Intent(getApplicationContext(), TutorialStart.class);
                 startActivity(tutorial);
             }
         });
