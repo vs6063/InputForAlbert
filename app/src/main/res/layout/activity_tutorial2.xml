@@ -33,7 +33,7 @@
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginTop="24dp"
-        android:src="@raw/left"
+        android:src="@raw/right"
         app:layout_constraintBottom_toTopOf="@+id/soundButton"
         app:layout_constraintHorizontal_bias="0.509"
         app:layout_constraintLeft_toLeftOf="parent"
