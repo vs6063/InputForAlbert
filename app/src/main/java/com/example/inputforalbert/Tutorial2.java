@@ -1,6 +1,7 @@
 package com.example.inputforalbert;
 
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -8,12 +9,20 @@ import android.widget.ImageButton;
 
 public class Tutorial2 extends AppCompatActivity {
 
+    private ImageButton nextButton;
+    private ImageButton backButton;
+
+    private ImageButton playSound;
+    private MediaPlayer tutorialScript;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_tutorial3);
+        setContentView(R.layout.activity_tutorial2);
 
-        final ImageButton nextButton = (ImageButton) findViewById(R.id.nextButton);
+        tutorialScript = MediaPlayer.create(this, R.raw.p2);
+
+        nextButton = (ImageButton) findViewById(R.id.nextButton);
         nextButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent nextTutorial = new Intent(getApplicationContext(), Tutorial3.class);
@@ -21,11 +30,18 @@ public class Tutorial2 extends AppCompatActivity {
             }
         });
 
-        final ImageButton backButton = (ImageButton) findViewById(R.id.backButton);
+        backButton = (ImageButton) findViewById(R.id.backButton);
         backButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent prevTutorial = new Intent(getApplicationContext(), Tutorial1.class);
                 startActivity(prevTutorial);
+            }
+        });
+
+        playSound = (ImageButton) findViewById(R.id.soundButton);
+        playSound.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                tutorialScript.start();
             }
         });
     }

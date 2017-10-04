@@ -112,8 +112,8 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
 
         // Tactile feedback initialisation
         v = (Vibrator) getSystemService(this.VIBRATOR_SERVICE);
-        tapSound = MediaPlayer.create(this, R.raw.tap);
-        swipeSound = MediaPlayer.create(this, R.raw.swipe);
+        tapSound = MediaPlayer.create(this, R.raw.tap_sound);
+        swipeSound = MediaPlayer.create(this, R.raw.swipe_sound);
     }
 
     @Override
