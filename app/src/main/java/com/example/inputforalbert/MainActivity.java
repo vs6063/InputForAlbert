@@ -7,7 +7,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.MotionEvent;
+import android.view.View;
+import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.view.GestureDetector;
 import android.widget.ToggleButton;
@@ -48,7 +51,7 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
     private float dx;
     private float dy;
     private boolean isScrolling;
-    private static int SCROLL_THRESHHOLD = 500;
+    private static int SCROLL_THRESHHOLD = 250;
     private static final double DEADZONE_ANGLE = 0.57735026919;
 
     // Initializer stuff for tactile feedback systems
@@ -91,6 +94,15 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
                     }
                     pinView.setText(pinConfirmed);
                 }
+            }
+        });
+
+        // Back button listener
+        final Button backButton = (Button) findViewById(R.id.backButton);
+        backButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent back = new Intent(getApplicationContext(), Startup.class);
+                startActivity(back);
             }
         });
 

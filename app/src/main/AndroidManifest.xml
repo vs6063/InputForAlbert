@@ -11,14 +11,20 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainActivity" />
+        <activity android:name=".DisplayPin" />
+        <activity android:name=".Startup">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".DisplayPin"></activity>
+        <activity android:name=".Tutorial1" />
+        <activity android:name=".Tutorial2" />
+        <activity android:name=".Tutorial3" />
+        <activity android:name=".Tutorial4" />
+        <activity android:name=".Tutorial5"></activity>
     </application>
 
 </manifest>
