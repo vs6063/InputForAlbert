@@ -10,7 +10,7 @@
         android:id="@+id/textView"
         android:layout_width="502dp"
         android:layout_height="324dp"
-        android:text="The tutorial will now begin.\n\nPlease explain to the customer that you will be teaching them how to use this system step by step. "
+        android:text="Here are the instructions.\n\nPlease explain to the customer that you will be teaching them how to use this system step by step. "
         android:textAlignment="center"
         android:textSize="40sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -25,32 +25,35 @@
         android:layout_height="369dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:srcCompat="@raw/speakerImage"
-        tools:layout_editor_absoluteY="551dp"
-        app:layout_constraintHorizontal_bias="0.2" />
+        app:srcCompat="@raw/speakerimage"
+        tools:layout_editor_absoluteY="382dp"
+        app:layout_constraintHorizontal_bias="0.446" />
 
     <ImageButton
         android:id="@+id/nextButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="23dp"
-        android:layout_marginRight="24dp"
-        android:rotation="0"
+        android:layout_width="80dp"
+        android:layout_height="75dp"
+        android:background="@null"
+        android:scaleX="1.5"
+        android:scaleY="1.5"
+        app:srcCompat="@raw/button"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:srcCompat="@raw/button" />
+        android:layout_marginBottom="32dp"
+        android:layout_marginRight="32dp"
+        app:layout_constraintRight_toRightOf="parent" />
 
     <ImageButton
         android:id="@+id/backButton"
-        android:layout_width="288dp"
-        android:layout_height="206dp"
-        android:background="null"
+        android:layout_width="80dp"
+        android:layout_height="75dp"
+        android:background="@null"
         android:rotation="180"
-        android:rotationX="9"
         app:srcCompat="@raw/button"
-        android:layout_marginLeft="-26dp"
-        app:layout_constraintLeft_toLeftOf="parent"
+        android:scaleX="1.5"
+        android:scaleY="1.5"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="16dp" />
+        android:layout_marginBottom="32dp"
+        android:layout_marginLeft="32dp"
+        app:layout_constraintLeft_toLeftOf="parent" />
 
 </android.support.constraint.ConstraintLayout>
