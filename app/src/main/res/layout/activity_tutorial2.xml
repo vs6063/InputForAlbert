@@ -17,8 +17,13 @@
         android:layout_marginLeft="2dp"
         android:layout_marginRight="2dp"
         app:layout_constraintTop_toTopOf="parent"
+<<<<<<< HEAD
         android:layout_marginTop="0dp"
         android:layout_marginBottom="25dp"
+=======
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="24dp"
+>>>>>>> 037a1117a7f3f8235215fd930c657f649e6e1afb
         app:layout_constraintBottom_toTopOf="@+id/gifImageView2" />
 
     <ImageButton
@@ -45,7 +50,7 @@
 
     <pl.droidsonroids.gif.GifImageView
         android:layout_width="283dp"
-        android:layout_height="405dp"
+        android:layout_height="0dp"
         android:layout_marginBottom="0dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
