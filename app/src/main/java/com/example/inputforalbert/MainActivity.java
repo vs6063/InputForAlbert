@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
     private Vibrator v;
     private MediaPlayer tapSound;
     private MediaPlayer swipeSound;
-
+    
     // Variable for controlling tap distance threshhold
     //private static int TAP_THRESHHOLD = 50;
 
@@ -148,13 +148,11 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
             if (e.getPointerCount() < lastCount) {
                 digit += (lastCount - e.getPointerCount());
                 v.vibrate(20);
-                tapSound.start();
             }
             // last pointer leaves screen, increment digit by 1
             if (e.getAction() == ACTION_UP) {
                 digit++;
                 v.vibrate(20);
-                tapSound.start();
             }
             // ensure digit doesn't pass 9
             if (digit > 9) {
@@ -163,6 +161,7 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
             
             // Change digit view accordingly
             if (showPin) {
+                tapSound.start();
                 digitView.setText(String.valueOf(digit));
             }
             // update last pointer count
@@ -172,22 +171,40 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
     }
 
     private void setDigit(String swipe) {
-
+        // output sound and vibration tactile feedback
+        swipeSound.release();
+        swipeSound = MediaPlayer.create(this, R.raw.swipe_sound);
+        swipeSound.start();
+        v.vibrate(80);
         int currentPin = pin.size();
         if(swipe.equals("RIGHT")) {
             // append current digit to pin and reset digit to 0
-            if(currentPin >= MAX_PIN) return;
+            if(currentPin >= MAX_PIN) {
+                swipeSound = MediaPlayer.create(this, R.raw.swipe_max);
+                swipeSound.start();
+                return;
+            }
+            swipeSound = MediaPlayer.create(this, R.raw.swipe_max);
+            swipeSound.start();
             pin.add(String.valueOf(digit));
         } else if(swipe.equals("LEFT")){
             // reset digit to 0
+            swipeSound = MediaPlayer.create(this, R.raw.swipe_left);
+            swipeSound.start();
         } else if(swipe.equals("DOWN")){
+            swipeSound = MediaPlayer.create(this, R.raw.swipe_down);
+            swipeSound.start();
             // reset entire pin and reset digit to 0
             pin.clear();
         } else if(swipe.equals("UP")){
             // submit current pin to DisplayPin activity as intent
-            if(pin.size() < MIN_PIN) return;
+            if(pin.size() < MIN_PIN) {
+                swipeSound = MediaPlayer.create(this, R.raw.swipe_min);
+                swipeSound.start();
+                return;
+            }
+            swipeSound = MediaPlayer.create(this, R.raw.swipe_up);
             swipeSound.start();
-            v.vibrate(80);
             Intent intent = new Intent(this, DisplayPin.class);
             intent.putExtra(PIN, pin);
             startActivity(intent);
@@ -208,9 +225,6 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
             pinView.setText(pinConfirmed);
         }
 
-        // output sound and vibration tactile feedback
-        swipeSound.start();
-        v.vibrate(80);
     }
 
     @Override
