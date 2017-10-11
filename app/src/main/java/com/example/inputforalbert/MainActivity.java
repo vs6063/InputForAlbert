@@ -173,38 +173,25 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
     private void setDigit(String swipe) {
         // output sound and vibration tactile feedback
         swipeSound.release();
-        swipeSound = MediaPlayer.create(this, R.raw.swipe_sound);
         swipeSound.start();
         v.vibrate(80);
         int currentPin = pin.size();
         if(swipe.equals("RIGHT")) {
             // append current digit to pin and reset digit to 0
             if(currentPin >= MAX_PIN) {
-                swipeSound = MediaPlayer.create(this, R.raw.swipe_max);
-                swipeSound.start();
                 return;
             }
-            swipeSound = MediaPlayer.create(this, R.raw.swipe_max);
-            swipeSound.start();
             pin.add(String.valueOf(digit));
         } else if(swipe.equals("LEFT")){
             // reset digit to 0
-            swipeSound = MediaPlayer.create(this, R.raw.swipe_left);
-            swipeSound.start();
         } else if(swipe.equals("DOWN")){
-            swipeSound = MediaPlayer.create(this, R.raw.swipe_down);
-            swipeSound.start();
             // reset entire pin and reset digit to 0
             pin.clear();
         } else if(swipe.equals("UP")){
             // submit current pin to DisplayPin activity as intent
             if(pin.size() < MIN_PIN) {
-                swipeSound = MediaPlayer.create(this, R.raw.swipe_min);
-                swipeSound.start();
                 return;
             }
-            swipeSound = MediaPlayer.create(this, R.raw.swipe_up);
-            swipeSound.start();
             Intent intent = new Intent(this, DisplayPin.class);
             intent.putExtra(PIN, pin);
             startActivity(intent);
