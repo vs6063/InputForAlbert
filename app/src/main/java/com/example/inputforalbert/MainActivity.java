@@ -80,7 +80,6 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
     int digit_max;
     int swipe_down;
     int swipe_left;
-    int swipe_up;
     int swipe_up_min;
     
     // Variable for controlling tap distance threshhold
@@ -158,7 +157,6 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
         digit_max = swipeSounds.load(MainActivity.this, R.raw.digit_max, 1);
         swipe_down = swipeSounds.load(MainActivity.this, R.raw.swipe_down, 1);
         swipe_left = swipeSounds.load(MainActivity.this, R.raw.swipe_left, 1);
-        swipe_up = swipeSounds.load(MainActivity.this, R.raw.swipe_up, 1);
         swipe_up_min = swipeSounds.load(MainActivity.this, R.raw.swipe_up_min, 1);
     }
 
@@ -276,7 +274,7 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
                 swipeSounds.play(swipe_up_min, 1, 1, 1, 0, 1);
                 return;
             }
-            swipeSounds.play(swipe_up, 1, 1, 1, 0, 1);
+            swipeSounds.release();
             Intent intent = new Intent(this, DisplayPin.class);
             intent.putExtra(PIN, pin);
             startActivity(intent);
