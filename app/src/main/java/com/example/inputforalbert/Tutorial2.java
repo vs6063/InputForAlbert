@@ -113,6 +113,3 @@ public class Tutorial2 extends AppCompatActivity implements GestureDetector.OnGe
     @Override
     public boolean onSingleTapUp(MotionEvent motionEvent) { return false; }
 }
-
-    }
-}
