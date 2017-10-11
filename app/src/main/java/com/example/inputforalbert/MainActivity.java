@@ -63,6 +63,7 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
     // Initializer stuff for tactile feedback systems
     private Vibrator v;
     SoundPool swipeSounds;
+    SoundPool swipeSound;
     private MediaPlayer tapSound;
     // Sounds for soundPool
     int digit_1;
@@ -81,6 +82,7 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
     int swipe_down;
     int swipe_left;
     int swipe_up_min;
+    int swipe_sound;
     
     // Variable for controlling tap distance threshhold
     //private static int TAP_THRESHHOLD = 50;
@@ -141,6 +143,8 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
     @SuppressWarnings("deprecation")
     protected void createSoundPool(){
         swipeSounds = new SoundPool(1, AudioManager.STREAM_MUSIC, 0);
+        swipeSound = new SoundPool(1, AudioManager.STREAM_MUSIC, 0);
+        swipe_sound = swipeSound.load(MainActivity.this, R.raw.swipe_sound, 1);
         tapSound = MediaPlayer.create(MainActivity.this, R.raw.tap_sound);
         digit_1 = swipeSounds.load(MainActivity.this, R.raw.digit_1, 1);
         digit_2 = swipeSounds.load(MainActivity.this, R.raw.digit_2, 1);
@@ -224,6 +228,7 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
                 swipeSounds.play(digit_max, 1, 1, 1, 0, 1);
                 return;
             }
+            swipeSound.play(swipe_sound, 1, 1, 0, 0, 1);
             pin.add(String.valueOf(digit));
             if (pin.size() == 1) {
                 swipeSounds.play(digit_1, 1, 1, 1, 0, 1);
@@ -263,10 +268,12 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
             }
         } else if(swipe.equals("LEFT")){
             // reset digit to 0
+            swipeSound.play(swipe_sound, 1, 1, 0, 0, 1);
             swipeSounds.play(swipe_left, 1, 1, 1, 0, 1);
         } else if(swipe.equals("DOWN")){
             // reset entire pin and reset digit to 0
             pin.clear();
+            swipeSound.play(swipe_sound, 1, 1, 0, 0, 1);
             swipeSounds.play(swipe_down, 1, 1, 1, 0, 1);
         } else if(swipe.equals("UP")){
             // submit current pin to DisplayPin activity as intent
@@ -275,6 +282,7 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
                 return;
             }
             swipeSounds.release();
+            swipeSound.release();
             Intent intent = new Intent(this, DisplayPin.class);
             intent.putExtra(PIN, pin);
             startActivity(intent);
