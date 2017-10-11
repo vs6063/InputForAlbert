@@ -72,11 +72,11 @@ public class Tutorial4 extends AppCompatActivity implements GestureDetector.OnGe
             if (absX > absY) {
                 if (dx > SCROLL_THRESHHOLD) {
                     tutorialScript.release();
-                    Intent prevTutorial = new Intent(getApplicationContext(), Tutorial2.class);
+                    Intent prevTutorial = new Intent(getApplicationContext(), Tutorial3.class);
                     startActivity(prevTutorial);
                 } else if (dx < -SCROLL_THRESHHOLD) {
                     tutorialScript.release();
-                    Intent nextTutorial = new Intent(getApplicationContext(), Tutorial4.class);
+                    Intent nextTutorial = new Intent(getApplicationContext(), Tutorial5.class);
                     startActivity(nextTutorial);
                 }
                 return true;
