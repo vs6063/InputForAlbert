@@ -20,12 +20,12 @@ public class Tutorial1 extends AppCompatActivity implements GestureDetector.OnGe
     private ImageButton nextButton;
     private ImageButton backButton;
 
+    private MediaPlayer tutorialScript;
     private ImageButton playSound;
 
     private GestureDetector gestureStuff;
     private float dx;
     private float dy;
-    private boolean isScrolling;
     private static int SCROLL_THRESHHOLD = 250;
 
     @Override
@@ -33,7 +33,7 @@ public class Tutorial1 extends AppCompatActivity implements GestureDetector.OnGe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tutorial1);
 
-        final MediaPlayer tutorialScript = MediaPlayer.create(Tutorial1.this,R.raw.step_1);
+        tutorialScript = MediaPlayer.create(Tutorial1.this,R.raw.step_1);
 
         nextButton = (ImageButton) findViewById(R.id.nextButton);
         nextButton.setOnClickListener(new View.OnClickListener() {
@@ -62,7 +62,6 @@ public class Tutorial1 extends AppCompatActivity implements GestureDetector.OnGe
 
         // Scroll initialisation
         this.gestureStuff = new GestureDetector(this,this);
-        isScrolling = false;
     }
 
     public boolean onTouchEvent (MotionEvent e) {
@@ -71,20 +70,20 @@ public class Tutorial1 extends AppCompatActivity implements GestureDetector.OnGe
         float absX = (dx > 0) ? dx : -dx;
         float absY = (dy > 0) ? dy : -dy;
         // If scroll distance is greater than the scroll threshhold, perform a swipe
-        if (e.getAction() == ACTION_UP && isScrolling && (absX > SCROLL_THRESHHOLD || absY > SCROLL_THRESHHOLD)) {
+        if (e.getAction() == ACTION_UP && (absX > SCROLL_THRESHHOLD || absY > SCROLL_THRESHHOLD)) {
             // Perform corresponding swipe action to scroll direction
             if (absX > absY) {
                 if (dx > SCROLL_THRESHHOLD) {
+                    tutorialScript.release();
                     Intent prevTutorial = new Intent(getApplicationContext(), TutorialStart.class);
                     startActivity(prevTutorial);
                 } else if (dx < -SCROLL_THRESHHOLD) {
+                    tutorialScript.release();
                     Intent nextTutorial = new Intent(getApplicationContext(), Tutorial2.class);
                     startActivity(nextTutorial);
                 }
+                return true;
             }
-            isScrolling = false;
-            return true;
-            // If scroll distance is less than the scroll threshhold, touch event is taken as a touch.
         }
         return false;
     }
@@ -95,7 +94,6 @@ public class Tutorial1 extends AppCompatActivity implements GestureDetector.OnGe
         dx = motionEvent1.getX(0) - motionEvent.getX(0);
         dy = motionEvent1.getY(0) - motionEvent.getY(0);
         if(motionEvent.getPointerCount() == 1) {
-            isScrolling = true;
             return true;
         }
         return false;
