@@ -27,7 +27,7 @@ public class TutorialEnd extends AppCompatActivity {
         backButton = (ImageButton) findViewById(R.id.backButton);
         backButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent prevTutorial = new Intent(getApplicationContext(), Tutorial5.class);
+                Intent prevTutorial = new Intent(getApplicationContext(), Tutorial6.class);
                 startActivity(prevTutorial);
             }
         });

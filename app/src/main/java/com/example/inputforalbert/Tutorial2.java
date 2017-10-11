@@ -2,7 +2,6 @@ package com.example.inputforalbert;
 
 import android.content.Intent;
 import android.media.MediaPlayer;
-import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -18,7 +17,7 @@ public class Tutorial2 extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_tutorial2);
+        setContentView(R.layout.activity_tutorial3);
 
         final MediaPlayer tutorialScript = MediaPlayer.create(Tutorial2.this, R.raw.step_2);
 

@@ -7,7 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
 
-public class Tutorial4 extends AppCompatActivity {
+public class Tutorial6 extends AppCompatActivity {
 
     private ImageButton nextButton;
     private ImageButton backButton;
@@ -17,15 +17,15 @@ public class Tutorial4 extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_tutorial4);
+        setContentView(R.layout.activity_tutorial6);
 
-        final MediaPlayer tutorialScript = MediaPlayer.create(this, R.raw.step_3);
+        final MediaPlayer tutorialScript = MediaPlayer.create(this, R.raw.step_5);
 
         nextButton = (ImageButton) findViewById(R.id.nextButton);
         nextButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 tutorialScript.release();
-                Intent nextTutorial = new Intent(getApplicationContext(), Tutorial5.class);
+                Intent nextTutorial = new Intent(getApplicationContext(), TutorialEnd.class);
                 startActivity(nextTutorial);
             }
         });
@@ -34,7 +34,7 @@ public class Tutorial4 extends AppCompatActivity {
         backButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 tutorialScript.release();
-                Intent prevTutorial = new Intent(getApplicationContext(), Tutorial3.class);
+                Intent prevTutorial = new Intent(getApplicationContext(), Tutorial5.class);
                 startActivity(prevTutorial);
             }
         });

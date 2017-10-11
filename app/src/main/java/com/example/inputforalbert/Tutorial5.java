@@ -2,7 +2,6 @@ package com.example.inputforalbert;
 
 import android.content.Intent;
 import android.media.MediaPlayer;
-import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -20,13 +19,13 @@ public class Tutorial5 extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tutorial5);
 
-        final MediaPlayer tutorialScript = MediaPlayer.create(this, R.raw.step_5);
+        final MediaPlayer tutorialScript = MediaPlayer.create(this, R.raw.step_4);
 
         nextButton = (ImageButton) findViewById(R.id.nextButton);
         nextButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 tutorialScript.release();
-                Intent nextTutorial = new Intent(getApplicationContext(), TutorialEnd.class);
+                Intent nextTutorial = new Intent(getApplicationContext(), Tutorial6.class);
                 startActivity(nextTutorial);
             }
         });
