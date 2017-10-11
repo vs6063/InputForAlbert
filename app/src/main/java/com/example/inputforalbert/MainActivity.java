@@ -148,13 +148,11 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
             if (e.getPointerCount() < lastCount) {
                 digit += (lastCount - e.getPointerCount());
                 v.vibrate(20);
-                tapSound.start();
             }
             // last pointer leaves screen, increment digit by 1
             if (e.getAction() == ACTION_UP) {
                 digit++;
                 v.vibrate(20);
-                tapSound.start();
             }
             // ensure digit doesn't pass 9
             if (digit > 9) {
@@ -163,6 +161,7 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
             
             // Change digit view accordingly
             if (showPin) {
+                tapSound.start();
                 digitView.setText(String.valueOf(digit));
             }
             // update last pointer count
@@ -172,7 +171,7 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
     }
 
     private void setDigit(String swipe) {
-
+        swipeSound.release();
         int currentPin = pin.size();
         if(swipe.equals("RIGHT")) {
             // append current digit to pin and reset digit to 0
@@ -180,6 +179,8 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
             pin.add(String.valueOf(digit));
         } else if(swipe.equals("LEFT")){
             // reset digit to 0
+            swipeSound = MediaPlayer.create(this, R.raw.swipe_left);
+            swipeSound.start();
         } else if(swipe.equals("DOWN")){
             // reset entire pin and reset digit to 0
             pin.clear();
@@ -209,7 +210,6 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
         }
 
         // output sound and vibration tactile feedback
-        swipeSound.start();
         v.vibrate(80);
     }
 
