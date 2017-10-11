@@ -63,6 +63,7 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
     // Initializer stuff for tactile feedback systems
     private Vibrator v;
     SoundPool swipeSounds;
+    private MediaPlayer tapSound;
     // Sounds for soundPool
     int digit_1;
     int digit_2;
@@ -81,7 +82,6 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
     int swipe_left;
     int swipe_up;
     int swipe_up_min;
-
     
     // Variable for controlling tap distance threshhold
     //private static int TAP_THRESHHOLD = 50;
@@ -142,6 +142,7 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
     @SuppressWarnings("deprecation")
     protected void createSoundPool(){
         swipeSounds = new SoundPool(1, AudioManager.STREAM_MUSIC, 0);
+        tapSound = MediaPlayer.create(MainActivity.this, R.raw.tap_sound);
         digit_1 = swipeSounds.load(MainActivity.this, R.raw.digit_1, 1);
         digit_2 = swipeSounds.load(MainActivity.this, R.raw.digit_2, 1);
         digit_3 = swipeSounds.load(MainActivity.this, R.raw.digit_3, 1);
@@ -193,6 +194,10 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
             }
             // last pointer leaves screen, increment digit by 1
             if (e.getAction() == ACTION_UP) {
+                if (showPin) {
+                    //swipeSounds.play(tap_sound, 1, 1, 0, 0, 1);
+                    tapSound.start();
+                }
                 digit++;
                 v.vibrate(20);
             }
@@ -218,60 +223,60 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
         if(swipe.equals("RIGHT")) {
             // append current digit to pin and reset digit to 0
             if(currentPin >= MAX_PIN) {
-                swipeSounds.play(digit_max, 1, 1, 0, 0, 1);
+                swipeSounds.play(digit_max, 1, 1, 1, 0, 1);
                 return;
             }
             pin.add(String.valueOf(digit));
             if (pin.size() == 1) {
-                swipeSounds.play(digit_1, 1, 1, 0, 0, 1);
+                swipeSounds.play(digit_1, 1, 1, 1, 0, 1);
             }
             else if (pin.size() == 2) {
-                swipeSounds.play(digit_2, 1, 1, 0, 0, 1);
+                swipeSounds.play(digit_2, 1, 1, 1, 0, 1);
             }
             else if (pin.size() == 3) {
-                swipeSounds.play(digit_3, 1, 1, 0, 0, 1);
+                swipeSounds.play(digit_3, 1, 1, 1, 0, 1);
             }
             else if (pin.size() == 4) {
-                swipeSounds.play(digit_4, 1, 1, 0, 0, 1);
+                swipeSounds.play(digit_4, 1, 1, 1, 0, 1);
             }
             else if (pin.size() == 5) {
-                swipeSounds.play(digit_5, 1, 1, 0, 0, 1);
+                swipeSounds.play(digit_5, 1, 1, 1, 0, 1);
             }
             else if (pin.size() == 6) {
-                swipeSounds.play(digit_6, 1, 1, 0, 0, 1);
+                swipeSounds.play(digit_6, 1, 1, 1, 0, 1);
             }
             else if (pin.size() == 7) {
-                swipeSounds.play(digit_7, 1, 1, 0, 0, 1);
+                swipeSounds.play(digit_7, 1, 1, 1, 0, 1);
             }
             else if (pin.size() == 8) {
-                swipeSounds.play(digit_8, 1, 1, 0, 0, 1);
+                swipeSounds.play(digit_8, 1, 1, 1, 0, 1);
             }
             else if (pin.size() == 9) {
-                swipeSounds.play(digit_9, 1, 1, 0, 0, 1);
+                swipeSounds.play(digit_9, 1, 1, 1, 0, 1);
             }
             else if (pin.size() == 10) {
-                swipeSounds.play(digit_10, 1, 1, 0, 0, 1);
+                swipeSounds.play(digit_10, 1, 1, 1, 0, 1);
             }
             else if (pin.size() == 11) {
-                swipeSounds.play(digit_11, 1, 1, 0, 0, 1);
+                swipeSounds.play(digit_11, 1, 1, 1, 0, 1);
             }
             else if (pin.size() == 12) {
-                swipeSounds.play(digit_12, 1, 1, 0, 0, 1);
+                swipeSounds.play(digit_12, 1, 1, 1, 0, 1);
             }
         } else if(swipe.equals("LEFT")){
             // reset digit to 0
-            swipeSounds.play(swipe_left, 1, 1, 0, 0, 1);
+            swipeSounds.play(swipe_left, 1, 1, 1, 0, 1);
         } else if(swipe.equals("DOWN")){
             // reset entire pin and reset digit to 0
             pin.clear();
-            swipeSounds.play(swipe_down, 1, 1, 0, 0, 1);
+            swipeSounds.play(swipe_down, 1, 1, 1, 0, 1);
         } else if(swipe.equals("UP")){
             // submit current pin to DisplayPin activity as intent
             if(pin.size() < MIN_PIN) {
-                swipeSounds.play(swipe_up_min, 1, 1, 0, 0, 1);
+                swipeSounds.play(swipe_up_min, 1, 1, 1, 0, 1);
                 return;
             }
-            swipeSounds.play(swipe_up, 1, 1, 0, 0, 1);
+            swipeSounds.play(swipe_up, 1, 1, 1, 0, 1);
             Intent intent = new Intent(this, DisplayPin.class);
             intent.putExtra(PIN, pin);
             startActivity(intent);
