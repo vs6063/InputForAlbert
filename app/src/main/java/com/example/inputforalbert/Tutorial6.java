@@ -30,7 +30,7 @@ public class Tutorial6 extends AppCompatActivity  implements GestureDetector.OnG
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tutorial6);
 
-        tutorialScript = MediaPlayer.create(this, R.raw.step_5);
+        tutorialScript = MediaPlayer.create(Tutorial6.this, R.raw.step_6);
 
         nextButton = (ImageButton) findViewById(R.id.nextButton);
         nextButton.setOnClickListener(new View.OnClickListener() {

@@ -50,14 +50,14 @@
         android:id="@+id/textView4"
         android:layout_width="545dp"
         android:layout_height="297dp"
-        android:text="You have finished the demo.\n\nMake sure your customer understands how to use this system then proceed to the input screen. "
+        android:text="The System instructions have now ended.\n\nCheck that the customer understands each step, and then proceed to the input screen!"
         android:textAlignment="center"
         android:textSize="40sp"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.509"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.157"
-        app:layout_constraintHorizontal_bias="0.509" />
+        app:layout_constraintVertical_bias="0.157" />
 
 </android.support.constraint.ConstraintLayout>

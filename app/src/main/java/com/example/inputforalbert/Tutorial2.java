@@ -28,9 +28,9 @@ public class Tutorial2 extends AppCompatActivity implements GestureDetector.OnGe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_tutorial3);
+        setContentView(R.layout.activity_tutorial2);
 
-        tutorialScript = MediaPlayer.create(Tutorial2.this,R.raw.step_2);
+        tutorialScript = MediaPlayer.create(Tutorial2.this, R.raw.step_2);
 
         nextButton = (ImageButton) findViewById(R.id.nextButton);
         nextButton.setOnClickListener(new View.OnClickListener() {

@@ -10,16 +10,16 @@
         android:id="@+id/textView"
         android:layout_width="502dp"
         android:layout_height="324dp"
-        android:text="Here are the instructions.\n\nPlease explain to the customer that you will be teaching them how to use this system step by step. "
+        android:layout_marginTop="8dp"
+        android:text="The instructions to using the system will now be displayed step by step.\n\nPlease explain to the customer as you go along.\nIf you have difficulty explaining there will be an option to play audio at the bottom of the screen. "
         android:textAlignment="center"
         android:textSize="40sp"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.491"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.144"
-        android:layout_marginTop="8dp"
-        app:layout_constraintHorizontal_bias="0.491" />
+        app:layout_constraintVertical_bias="0.144" />
 
     <ImageView
         android:id="@+id/imageView10"
