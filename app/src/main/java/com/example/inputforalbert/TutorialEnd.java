@@ -7,13 +7,14 @@ import android.os.Bundle;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 
 import static android.view.MotionEvent.ACTION_UP;
 
 public class TutorialEnd extends AppCompatActivity implements GestureDetector.OnGestureListener {
 
-    private ImageButton nextButton;
+    private Button nextButton;
     private ImageButton backButton;
 
     private MediaPlayer tutorialScript;
@@ -32,7 +33,7 @@ public class TutorialEnd extends AppCompatActivity implements GestureDetector.On
         tutorialScript = MediaPlayer.create(TutorialEnd.this,R.raw.conclusion_tutorial);
         tutorialScript.start();
 
-        nextButton = (ImageButton) findViewById(R.id.nextButton);
+        nextButton = (Button) findViewById(R.id.nextButton);
         nextButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 tutorialScript.release();
