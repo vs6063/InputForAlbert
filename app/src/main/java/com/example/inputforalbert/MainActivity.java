@@ -65,6 +65,7 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
     SoundPool swipeSounds;
     SoundPool swipeSound;
     private MediaPlayer tapSound;
+
     // Sounds for soundPool
     int digit_1;
     int digit_2;
