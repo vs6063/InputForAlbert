@@ -181,12 +181,14 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
                     setDigit("LEFT");
                 }
             } else {
-                if(dy < -SCROLL_THRESHHOLD) {
+                if (dy < -SCROLL_THRESHHOLD) {
                     setDigit("UP");
-                } else if(dy > SCROLL_THRESHHOLD) {
+                } else if (dy > SCROLL_THRESHHOLD) {
                     setDigit("DOWN");
                 }
+
             }
+            dx = dy = 0;
         // If scroll distance is less than the scroll threshhold, touch event is taken as a touch.
         } else { //if(absX < TAP_THRESHHOLD && absY < TAP_THRESHHOLD) {
             // Compare current pointer count and last pointer count to determine how many fingers are on the screen
