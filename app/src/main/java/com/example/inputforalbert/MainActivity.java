@@ -134,7 +134,7 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
 
         // Scroll initialisation
         this.gestureStuff = new GestureDetector(this,this);
-        isScrolling = false;
+        isScrolling = true;
 
         // Tactile feedback initialisation
         v = (Vibrator) getSystemService(this.VIBRATOR_SERVICE);
@@ -176,19 +176,22 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
             // Perform corresponding swipe action to scroll direction
             if(absX > absY) {
                 if (dx > SCROLL_THRESHHOLD) {
+                    dx = dy = 0;
                     setDigit("RIGHT");
                 } else if (dx < -SCROLL_THRESHHOLD) {
+                    dx = dy = 0;
                     setDigit("LEFT");
                 }
             } else {
                 if(dy < -SCROLL_THRESHHOLD) {
+                    dx = dy = 0;
                     setDigit("UP");
                 } else if(dy > SCROLL_THRESHHOLD) {
+                    dx = dy = 0;
                     setDigit("DOWN");
                 }
             }
-            dx = dy = 0;
-            isScrolling = false;
+            isScrolling = true;
         // If scroll distance is less than the scroll threshhold, touch event is taken as a touch.
         } else { //if(absX < TAP_THRESHHOLD && absY < TAP_THRESHHOLD) {
             // Compare current pointer count and last pointer count to determine how many fingers are on the screen
@@ -199,7 +202,7 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
             // last pointer leaves screen, increment digit by 1
             if (e.getAction() == ACTION_UP) {
                 if (showPin) {
-                    //swipeSounds.play(tap_sound, 1, 1, 0, 0, 1);
+                    isScrolling = true;
                     tapSound.start();
                 }
                 digit++;
@@ -309,25 +312,14 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
 
     @Override
     public boolean onScroll(MotionEvent motionEvent, MotionEvent motionEvent1, float v, float v1) {
-        float n_dx, n_dy;
-        float absn_dx, absn_dy;
-        boolean single = false;
-        n_dx = motionEvent1.getX(0) - motionEvent.getX(0);
-        n_dy = motionEvent1.getY(0) - motionEvent.getY(0);
-        absn_dx = (n_dx - dx > 0) ? n_dx - dx : dx - n_dx;
-        absn_dy = (n_dy - dy > 0) ? n_dy - dy : dy - n_dy;
 
-        if(SCROLL_THRESHHOLD > absn_dx && SCROLL_THRESHHOLD > absn_dy) {
-            single = true;
-            dx = n_dx;
-            dy = n_dy;
-        } else {
-            single = false;
-        }
+        dx = motionEvent1.getX(0) - motionEvent.getX(0);
+        dy = motionEvent1.getY(0) - motionEvent.getY(0);
 
-        if(single) {
-            isScrolling = true;
+        if(isScrolling && motionEvent1.getPointerCount() <= 1) {
             return true;
+        } else {
+            isScrolling = false;
         }
         return false;
     }
