@@ -176,22 +176,17 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
             // Perform corresponding swipe action to scroll direction
             if(absX > absY) {
                 if (dx > SCROLL_THRESHHOLD) {
-                    dx = dy = 0;
                     setDigit("RIGHT");
                 } else if (dx < -SCROLL_THRESHHOLD) {
-                    dx = dy = 0;
                     setDigit("LEFT");
                 }
             } else {
                 if(dy < -SCROLL_THRESHHOLD) {
-                    dx = dy = 0;
                     setDigit("UP");
                 } else if(dy > SCROLL_THRESHHOLD) {
-                    dx = dy = 0;
                     setDigit("DOWN");
                 }
             }
-            isScrolling = true;
         // If scroll distance is less than the scroll threshhold, touch event is taken as a touch.
         } else { //if(absX < TAP_THRESHHOLD && absY < TAP_THRESHHOLD) {
             // Compare current pointer count and last pointer count to determine how many fingers are on the screen
@@ -202,9 +197,10 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
             // last pointer leaves screen, increment digit by 1
             if (e.getAction() == ACTION_UP) {
                 if (showPin) {
-                    isScrolling = true;
                     tapSound.start();
                 }
+                isScrolling = true;
+                dx = dy = 0;
                 digit++;
                 v.vibrate(20);
             }
