@@ -187,6 +187,7 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
                     setDigit("DOWN");
                 }
             }
+            dx = dy = 0;
             isScrolling = false;
         // If scroll distance is less than the scroll threshhold, touch event is taken as a touch.
         } else { //if(absX < TAP_THRESHHOLD && absY < TAP_THRESHHOLD) {
@@ -308,10 +309,23 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
 
     @Override
     public boolean onScroll(MotionEvent motionEvent, MotionEvent motionEvent1, float v, float v1) {
+        float n_dx, n_dy;
+        float absn_dx, absn_dy;
+        boolean single = false;
+        n_dx = motionEvent1.getX(0) - motionEvent.getX(0);
+        n_dy = motionEvent1.getY(0) - motionEvent.getY(0);
+        absn_dx = (n_dx - dx > 0) ? n_dx - dx : dx - n_dx;
+        absn_dy = (n_dy - dy > 0) ? n_dy - dy : dy - n_dy;
 
-        dx = motionEvent1.getX(0) - motionEvent.getX(0);
-        dy = motionEvent1.getY(0) - motionEvent.getY(0);
-        if(motionEvent.getPointerCount() == 1) {
+        if(SCROLL_THRESHHOLD > absn_dx && SCROLL_THRESHHOLD > absn_dy) {
+            single = true;
+            dx = n_dx;
+            dy = n_dy;
+        } else {
+            single = false;
+        }
+
+        if(single) {
             isScrolling = true;
             return true;
         }
